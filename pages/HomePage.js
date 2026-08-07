@@ -10,7 +10,7 @@ export class HomePage {
         this.welcomeMessage = page.locator("div.top strong");
         // Dashboard Cards
         this.userCountCard = page.locator('div.value[routerlink="/user"]');
-        this.staffCountCard = page.locator('div.value[routerlink="/staff"]');
+        this.staffCountCard = page.locator('div.value', { hasText: 'Staff' });
         this.batchCountCard = page.locator('div.value[routerlink="/batch"]');
         this.programCountCard = page.locator('div.value[routerlink="/program"]');
         this.manageUserHeading = page.getByText('Manage User', { exact: true });
@@ -77,11 +77,7 @@ export class HomePage {
           await expect(this.staffCountCard).toContainText('Staff');
         }
         async verifyStaffCardNotClickable() {
-           const currentUrl = this.page.url();
-
-           await this.staffCountCard.click({ force: true });
-
-           await expect(this.page).toHaveURL(currentUrl);
+           await expect(this.staffCountCard).not.toHaveAttribute('routerlink');
         }
         async verifyBatchCountCard() {
            await expect(this.batchCountCard).toBeVisible();
