@@ -1,0 +1,32 @@
+{
+  "name": "lms_playwrightproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "playwright.config.js",
+  "scripts": {
+    "bddgen": "bddgen",
+    "test": "npm run bddgen && npx  playwright test",
+    "report": " playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumithraanand/LMS_PlaywrightBDD_Team05.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/sumithraanand/LMS_PlaywrightBDD_Team05/issues"
+  },
+  "homepage": "https://github.com/sumithraanand/LMS_PlaywrightBDD_Team05#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.2.1",
+    "@playwright/test": "^1.62.1",
+    "playwright-bdd": "^9.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "xlsx": "^0.18.5"
+  }
+}
