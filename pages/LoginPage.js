@@ -29,9 +29,8 @@ export class LoginPage{
 
     async login() {
 
-        console.log("Inside login()");
-      //console.log(`Navigated to URL: ${this.page.url()}`);
-      //console.log(`Page title: ${await this.page.title()}`);
+       //console.log(`Navigated to URL: ${this.page.url()}`);
+       //console.log(`Page title: ${await this.page.title()}`);
        await this.usernameField.waitFor({ state: 'visible' });
        await this.usernameField.fill(this.username);
        await this.passwordField.waitFor({ state: 'visible' });
@@ -44,9 +43,9 @@ export class LoginPage{
     await this.loginButton.click();
 }
 
- //  async getDropdownItems() {
- //   return await this.dropdownItems.allTextContents();
- // }
+     //  async getDropdownItems() {
+     //   return await this.dropdownItems.allTextContents();
+     // }
 
   async selectRole() {
 

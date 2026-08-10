@@ -2,11 +2,12 @@
   "name": "lms_playwrightproject",
   "version": "1.0.0",
   "description": "",
-  "main": "playwright.config.js",
+  "main": "index.js",
   "scripts": {
+    "test": "playwright test",
     "bddgen": "bddgen",
-    "test": "npm run bddgen && npx  playwright test",
-    "report": " playwright show-report"
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
   },
   "repository": {
     "type": "git",

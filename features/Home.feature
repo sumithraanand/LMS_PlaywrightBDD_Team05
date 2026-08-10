@@ -40,7 +40,7 @@ Feature: Home Page
     Scenario: Navigation to ManageProgram page
       Then Admin should be navigated to Manage Program page
      Scenario: Staff Count card presence
-       Then Admin should see Staff count for Active and inactive user
+       Then Admin should see Staff count 
     Scenario: Navigation presence for Staff count card 
        Then Admin should not see the navigation to staff  page
     Scenario: Batch count card presence

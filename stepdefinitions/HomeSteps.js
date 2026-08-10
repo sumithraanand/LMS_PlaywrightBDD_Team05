@@ -8,7 +8,7 @@ let homePage;
 let loginPage;
 
 Given('Admin is on the browser', async ({ page }) => {
-    loginPage = new LoginPage(page);
+    const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
 });
 
@@ -82,7 +82,7 @@ Then('Admin should be navigated to Manage Program page', async ({}) => {
     await homePage.verifyManageProgramPage();
 });
 
-Then('Admin should see Staff count for Active and inactive user', async ({}) => {
+Then('Admin should see Staff count', async ({}) => {
   await homePage.verifyStaffCountCard();
 });
 

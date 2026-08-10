@@ -36,18 +36,25 @@ class ExcelReader {
         return XLSX.utils.sheet_to_json(sheet);
     }
 
-    // Returns a single row by TestCaseID
-    getRowByTestCase(sheetName, TestScenarioID) {
+    // Returns a single row by TestScenarioID
+    getRowByTestScenario(sheetName, testScenarioID) {
 
         const data = this.getSheetData(sheetName);
 
-        return data.find(
+        const row = data.find(
             row =>
-                row.TestCaseID?.trim().toLowerCase() ===
-                testCaseID.trim().toLowerCase()
+                row.TestScenarioID?.toString().trim().toLowerCase() ===
+                testScenarioID.toString().trim().toLowerCase()
         );
-    }
 
+        if (!row) {
+            throw new Error(
+                `TestScenarioID "${testScenarioID}" not found in sheet "${sheetName}".`
+            );
+        }
+
+        return row;
+    }
 }
 
 export default ExcelReader;
