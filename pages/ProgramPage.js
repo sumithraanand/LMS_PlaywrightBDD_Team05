@@ -26,7 +26,9 @@ export class ProgramPage {
     this.confirmYesButton = this.confirmDialog.getByRole('button', { name: 'Yes', exact: true });
     this.confirmNoButton = this.confirmDialog.getByRole('button', { name: 'No', exact: true });
     this.confirmCloseButton = this.confirmDialog.locator('.p-dialog-header-close, button').filter({ has: page.locator('.pi-times') }).first();
-    this.toast = page.locator('.p-toast-message');
+    // PrimeNG can briefly retain the setup toast while showing the operation
+    // toast. Use the newest message to avoid strict-mode violations.
+    this.toast = page.locator('.p-toast-message').last();
     this.footer = page.getByText(/In total there are \d+ programs\./i);
     this.entryText = page.getByText(/Showing \d+ to \d+ of \d+ entries/i);
     this.zeroEntries = page.getByText(/Showing 0 to 0 of 0 entries/i);
@@ -199,6 +201,8 @@ export class ProgramPage {
   async searchFor(value) {
     await this.search.fill(String(value ?? ''));
     await expect(this.search).toHaveValue(String(value ?? ''));
+    // The Program table applies its global filter asynchronously.
+    await this.page.waitForTimeout(750);
   }
 
   async expectMatchingSearchResults(query) {
@@ -235,7 +239,13 @@ export class ProgramPage {
   }
 
   async hasRowNamed(name) {
-    return this.rowByName(name).isVisible().catch(() => false);
+    return (await this.rowByName(name).count()) > 0;
+  }
+
+  async firstVisibleProgramName() {
+    const firstRow = this.rows.first();
+    await expect(firstRow).toBeVisible({ timeout: 15000 });
+    return (await firstRow.locator('td').nth(1).innerText()).trim();
   }
 
   async clickEdit(name) {

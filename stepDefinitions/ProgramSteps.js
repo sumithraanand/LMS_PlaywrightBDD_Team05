@@ -17,28 +17,53 @@ let currentSortValues = [];
 let currentSortDirection = 'asc';
 let recordsBeforeNavigation = [];
 let recordsAfterNavigation = [];
+const editedProgramsByKey = new Map();
+let deletedProgramName = '';
 
 function getProgramPage(page) {
   return new ProgramPage(page);
 }
 
-async function ensureProgramExists(page, data, targetName) {
-  const programPage = getProgramPage(page);
-  await programPage.searchFor(targetName);
+async function ensureProgramExists(programPage, data, target, allowExistingFallback = false) {
+  await programPage.open();
+  await programPage.searchFor(target);
 
-  if (await programPage.hasRowNamed(targetName)) return;
+  if (await programPage.hasRowNamed(target)) {
+    return target;
+  }
+
+  // Edit tests only need a valid existing row. In the shared environment the
+  // API can reject a duplicate name even when that record is not returned by
+  // the table search, so safely use another visible row instead of creating.
+  if (allowExistingFallback) {
+    await programPage.searchFor('');
+    return programPage.firstVisibleProgramName();
+  }
+
+  const setupName = uniqueProgramName();
 
   await programPage.searchFor('');
   await programPage.openAddDialog();
-  await programPage.fillProgram({
-    name: targetName,
-    description: data.Description || 'Automation test program',
-    status: data.Status || 'Active',
+
+  await programPage.fillProgramForm({
+    ProgramName: setupName,
+    Description: data.Description || 'Automation test program',
+    Status: data.Status || 'Active'
   });
+
   await programPage.save();
   await programPage.expectToast(/Successful|Created/i);
-  await programPage.searchFor(targetName);
-  await expect(programPage.rowByName(targetName)).toBeVisible({ timeout: 10000 });
+
+  // Refresh data after creation because the shared Program table can retain
+  // the pre-create dataset until the page is reloaded.
+  await programPage.page.reload();
+  await programPage.open();
+  await programPage.searchFor(setupName);
+  await expect(programPage.rowByName(setupName)).toBeVisible({
+    timeout: 15000
+  });
+
+  return setupName;
 }
 
 Given('Admin is logged in to LMS Portal', async ({ page }) => {
@@ -178,7 +203,11 @@ Then('the Program name format error should be displayed', async ({ page }) => {
 When('Admin searches using data key {string}', async ({ page }, key) => {
   const programPage = getProgramPage(page);
   const data = programData(key);
-  if (data.SearchQuery === '<created>') {
+  if (editedProgramsByKey.has(key)) {
+    currentSearchValue = editedProgramsByKey.get(key).ProgramName;
+  } else if (key === 'deleteProgram' && deletedProgramName) {
+    currentSearchValue = deletedProgramName;
+  } else if (data.SearchQuery === '<created>') {
     currentSearchValue = createdProgramName;
   } else {
     currentSearchValue = data.SearchQuery || data.ProgramName;
@@ -196,25 +225,46 @@ Then('zero Program records should be displayed', async ({ page }) => {
 });
 
 When('Admin opens Edit for Program using data key {string}', async ({ page }, key) => {
-  const programPage = getProgramPage(page);
-  const data = programData(key);
-  const target = data.SearchQuery || data.ProgramName;
-  await ensureProgramExists(page, data, target);
-  await programPage.clickEdit(target);
-});
+    const programPage = getProgramPage(page);
+    const data = programData(key);
+    const target = data.SearchQuery || data.ProgramName;
+
+    const ensuredTarget = await ensureProgramExists(
+      programPage,
+      data,
+      target,
+      true
+    );
+
+    await programPage.clickEdit(ensuredTarget);
+  }
+);
 
 When('Admin edits Program using data key {string}', async ({ page }, key) => {
   const programPage = getProgramPage(page);
   const data = programData(key);
   const target = data.SearchQuery || data.ProgramName;
-  await ensureProgramExists(page, data, target);
-  await programPage.clickEdit(target);
+  const ensuredTarget = await ensureProgramExists(programPage, data, target, true);
+  await programPage.clickEdit(ensuredTarget);
+
+  // A fixed edited name can already exist in the shared test environment.
+  // Use unique data for a name-edit scenario and retain it for verification.
+  const updatedName = data.ProgramName && data.ProgramName !== target
+    ? uniqueProgramName()
+    : undefined;
+
   await programPage.fillProgram({
-    name: data.ProgramName || undefined,
+    name: updatedName,
     description: data.Description || undefined,
     status: data.Status || undefined,
   });
   await programPage.save();
+
+  editedProgramsByKey.set(key, {
+    ProgramName: updatedName || ensuredTarget,
+    Description: data.Description || undefined,
+    Status: data.Status || undefined,
+  });
 });
 
 Then('a Program updated success message should be displayed', async ({ page }) => {
@@ -222,23 +272,27 @@ Then('a Program updated success message should be displayed', async ({ page }) =
 });
 
 Then('Program details should match data key {string}', async ({ page }, key) => {
-  await getProgramPage(page).expectRowData(programData(key));
+  const expected = editedProgramsByKey.has(key)
+    ? editedProgramsByKey.get(key)
+    : programData(key);
+  await getProgramPage(page).expectRowData(expected);
 });
 
 When('Admin requests Program deletion using data key {string}', async ({ page }, key) => {
   const programPage = getProgramPage(page);
   const data = programData(key);
   const name = data.SearchQuery || data.ProgramName;
-  await ensureProgramExists(page, data, name);
-  await programPage.clickDelete(name);
+  const ensuredName = await ensureProgramExists(programPage, data, name);
+  await programPage.clickDelete(ensuredName);
 });
 
 When('Admin deletes Program using data key {string}', async ({ page }, key) => {
   const programPage = getProgramPage(page);
   const data = programData(key);
   const name = data.SearchQuery || data.ProgramName;
-  await ensureProgramExists(page, data, name);
-  await programPage.clickDelete(name);
+  const ensuredName = await ensureProgramExists(programPage, data, name);
+  deletedProgramName = ensuredName;
+  await programPage.clickDelete(ensuredName);
   await programPage.confirmDelete();
 });
 

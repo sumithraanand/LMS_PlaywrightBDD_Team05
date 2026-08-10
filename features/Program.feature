@@ -125,6 +125,8 @@ Feature: Program Page
     Then a Program updated success message should be displayed
 
   Scenario: Verify edited Program details
+    When Admin edits Program using data key "editProgramName"
+    Then a Program updated success message should be displayed
     When Admin searches using data key "editProgramName"
     Then Program details should match data key "editProgramName"
 
@@ -251,3 +253,4 @@ Feature: Program Page
   Scenario: Pagination when there are less than 5 records
     When Admin searches using data key "singleResultProgram"
     Then all Program pagination navigation buttons should be disabled
+
