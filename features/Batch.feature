@@ -1,5 +1,5 @@
 @batch
-Feature: Batch Page 
+Feature: Batch Page
     Background: Admin enters the Valid LMS app URL
        Given Admin is on home page after Login
        When Admin clicks "Batch" on the navigation bar
@@ -25,7 +25,7 @@ Rule: Manage Batch - UI validation
      Scenario: Row Checkbox is displayed
         Then Admin should see the checkbox in each row
      Scenario: Datatable headers are displayed
-        Then Admin should see the datatable headers 
+        Then Admin should see the datatable headers
                |Batch Name|
                |Batch Description|
                |Batch Status|
@@ -64,7 +64,7 @@ Rule: Add New Batch - Functional Validation
         Then Admin should see selected program name in the batch name prefix box
      Scenario: Batch name suffix accepts only numbers
         When Admin enters alphabets in batch name suffix box
-        Then Admin should get error message below the text box of respective field 
+        Then Admin should get error message below the text box of respective field
      Scenario: Batch name Prefix cannot be edited
         When Admin enters alphabets in batch name prefix box
         Then Admin should see empty text box
@@ -72,12 +72,12 @@ Rule: Add New Batch - Functional Validation
        When Admin leaves blank one of the mandatory fields
        Then Admin should get a error message on the respective mandatory field
     Scenario: Cancel Button functionality
-       When Admin enters the valid data to all the mandatory fields and click cancel button 
-       Then Admin should see the batch details popup closes without creating any batch  
+       When Admin enters the valid data to all the mandatory fields and click cancel button
+       Then Admin should see the batch details popup closes without creating any batch
     Scenario: Close icon functionality
        When Admin clicks on the close icon
        Then batch details pop up closes
-      @EditBatchValidation 
+      @EditBatchValidation
 Rule: Edit Batch Validation
      Background: Admin navigates to Manage batch page after logged in
            Given Admin is on the Batch page
