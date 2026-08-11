@@ -253,4 +253,3 @@ Feature: Program Page
   Scenario: Pagination when there are less than 5 records
     When Admin searches using data key "singleResultProgram"
     Then all Program pagination navigation buttons should be disabled
-
