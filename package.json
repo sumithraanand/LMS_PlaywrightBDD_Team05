@@ -6,17 +6,22 @@
   "scripts": {
     "test": "playwright test",
     "bddgen": "bddgen",
+<<<<<<< HEAD
     "test:headed": "playwright test --headed",
     "report": "playwright show-report"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sumithraanand/LMS_PlaywrightBDD_Team05.git"
+=======
+    "test:headed": "playwright test --headed"
+>>>>>>> origin/Radhika_LMS_New
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
+<<<<<<< HEAD
   "bugs": {
     "url": "https://github.com/sumithraanand/LMS_PlaywrightBDD_Team05/issues"
   },
@@ -24,6 +29,12 @@
   "devDependencies": {
     "@cucumber/cucumber": "^13.2.1",
     "@playwright/test": "^1.62.1",
+=======
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.2.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+>>>>>>> origin/Radhika_LMS_New
     "playwright-bdd": "^9.2.0"
   },
   "dependencies": {

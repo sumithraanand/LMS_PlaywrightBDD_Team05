@@ -124,6 +124,7 @@ export class HomePage {
          ]);
         }
 
+<<<<<<< HEAD
 }
 
 
@@ -131,3 +132,6 @@ export class HomePage {
 
 
 
+=======
+}
+>>>>>>> origin/Radhika_LMS_New
