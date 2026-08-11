@@ -8,7 +8,7 @@ let homePage;
 let loginPage;
 
 Given('Admin is on the browser', async ({ page }) => {
-    const loginPage = new LoginPage(page);
+    loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
 });
 
