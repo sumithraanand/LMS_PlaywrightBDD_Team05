@@ -49,12 +49,17 @@ async clickLogin() {
 }
 
    async getDropdownItems(){
-    const options = this.page.getByRole('mat-option');
+    const options = this.page.locator(
+        '.cdk-overlay-pane mat-option'
+    );
 
     await options.first().waitFor({
         state: 'visible',
         timeout: 10000
     });
+
+    const items = await options.allTextContents();
+    console.log('Dropdown options:', items);
     return (await this.page.getByRole('option').allTextContents())
     .map(item => item.trim())
     .filter(Boolean);

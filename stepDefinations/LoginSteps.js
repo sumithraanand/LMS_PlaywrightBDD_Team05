@@ -135,9 +135,9 @@ Then('Admin should see one dropdown', async ({page}) => {
         .flat()
         .map(item => item.trim().toLowerCase());
 
-   // await loginPage.roleDropdown.click();
+    await loginPage.roleDropdown.click();
     const actualItems = (await loginPage.getDropdownItems())
-          .map(item => item.trim.toLowerCase());
+          .map(item => item.trim().toLowerCase());
 
     console.log('Expected dropdown items:', expectedItems);
     console.log('Actual dropdown items:', actualItems);
