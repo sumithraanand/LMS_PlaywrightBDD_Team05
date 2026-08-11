@@ -312,7 +312,7 @@ async clickDeleteIcon() {
     await expect(this.confirmTitle).toBeVisible({ timeout: 10000 });
     await expect(this.yesButton).toBeVisible({ timeout: 10000 }); 
     await expect(this.cancelButton).toBeVisible({ timeout: 10000 }); 
-    
+   
     }
  
 async confirmAlertTitle(){
@@ -333,7 +333,6 @@ async verifySuccessfulMessage(){
     await expect(this.successMessage).toBeVisible({timeout: 10000});
 
 }
-
 async clickCancelButton() {
     await expect(this.confirmDialog).toBeVisible({
         timeout: 10000

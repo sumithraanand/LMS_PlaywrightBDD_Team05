@@ -18,7 +18,7 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env') });
   const testDir = defineBddConfig({
     features: ['features/**/*.feature'], // Standard glob for subfolders
     steps: ['stepDefinations/**/*.js'],
-    tags :'@Batch_Pagination',
+    tags :' ',
    //tags : ' '
 });
 
@@ -29,7 +29,7 @@ export default defineConfig({
   //testDir: './tests',
   testDir,
   /* Run tests in files in parallel */
-  fullyParallel: false,
+  fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */

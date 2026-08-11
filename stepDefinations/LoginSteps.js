@@ -2,12 +2,16 @@ import { createBdd } from "playwright-bdd";
 const{Given,When, Then} = createBdd();
 import { expect } from '@playwright/test';
 import {LoginPage} from "../pages/LoginPage.js";
+import { HomePage } from '../pages/HomePage.js';
 import { request } from "node:http";
-import ExcelReader from "../utils/excelReader.js";
+import ExcelReader from "../utils/ExcelReader.js";
 const excelReader = new ExcelReader();
+
 
 Given('Admin is on the browser', async ({page}) => {
       console.log ("Browser session started");
+      const loginPage = new LoginPage(page);
+      await loginPage.gotoLoginPage();
   });
   
 When('Admin enters the Valid LMS app URL', async ({page}) => {
@@ -123,14 +127,21 @@ Then('Admin should see one dropdown', async ({page}) => {
   
   });
   
-  Then('Admin should see options in dropdown', async ({page}, expectedText) => {
+  Then('Admin should see options in dropdown', async ({ page }, dataTable) => {
    
     const loginPage = new LoginPage(page);
-    const expectedItems = dataTable.raw().flat().map(item => item.trim());
-    await loginPage.roleDropdown.click();
-    const actualItems = await loginPage.getDropdownItems();
-    console.log(`expected dropdown items: ${expectedItems}`);
-    console.log(`actual dropdown items: ${actualItems}`);
+    const expectedItems = dataTable
+        .raw()
+        .flat()
+        .map(item => item.trim().toLowerCase());
+
+   // await loginPage.roleDropdown.click();
+    const actualItems = (await loginPage.getDropdownItems())
+          .map(item => item.trim.toLowerCase());
+
+    console.log('Expected dropdown items:', expectedItems);
+    console.log('Actual dropdown items:', actualItems);
+
     expect(actualItems).toEqual(expectedItems);
 
   });
@@ -166,7 +177,10 @@ Then('Admin should see one dropdown', async ({page}) => {
   });
   
   Then('Admin should land on home page', async ({page}) => {
-       await expect(page.getByText('Dashboard')).toBeVisible();
+       
+    await expect(page.getByText('Dashboard')).toBeVisible();
+    const homePage = new HomePage(page);
+    await homePage.verifyHomePageLoaded();
 
   });
 

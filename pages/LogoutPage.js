@@ -12,6 +12,5 @@ export class LogoutPage{
     async logout(){
         await this.logoutButton.click();
     }
-  
-    
+   
 }

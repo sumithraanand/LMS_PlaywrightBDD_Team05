@@ -137,7 +137,6 @@ Background: Admin navigates to Manage batch page after logged in
         Then Admin should see the Multiple delete box enabled under manage batch 
 
  Scenario:Delete Multiple Batches
-
         When Admin selects more than one batch by clicking on the checkbox
         And Admin clicks on the delete button on the left top of the batch page
         Then Admin lands on Confirmation form
@@ -174,6 +173,6 @@ Given Admin is on the batch page with multiple pages of batch record
  Then Admin should see the previous page on the table
 
  Scenario:First Page Navigation
-Given Admin is on the batch page with multiple pages of batch record
+ Given Admin is on the batch page with multiple pages of batch record
  When Admin clicks the first page option (<<) in the pagination control
  Then Admin should see the very first page on the data table

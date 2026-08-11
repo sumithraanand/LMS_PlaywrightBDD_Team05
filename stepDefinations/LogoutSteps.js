@@ -13,7 +13,7 @@ Given('Admin is in home page', async ({page}) => {
   });
   
   When('Admin clicks on the logout in the menu bar', async ({page}) => {
-  
+    
     const logoutPage = new LogoutPage(page);
     await logoutPage.logout();
   });

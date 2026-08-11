@@ -53,8 +53,8 @@ Scenario: Placeholder presence in dropdown
 Scenario: Dropdown options to select role
     Then Admin should see options in dropdown
     | Admin |
-    | staff |
-    | student |
+    | Staff |
+    | Student |
 
 Scenario: Login button is displayed
     Then Admin should see login button

@@ -8,9 +8,6 @@ export class LoginPage{
         this.loginLink = this.page.locator('[id="login"]');
         this.username=process.env.USER;
         this.password=process.env.PASSWORD;
-       // this.dropdownItems = this.page.getByRole('listbox');
-      //  this.usernameField = this.page.locator('#username');
-     //   this.passwordField = this.page.locator('#password');
         this.usernameField = this.page.getByRole('textbox', {name:'User'});
         this.passwordField = this.page.getByRole('textbox', {name:'Password'});
         this.loginButton = this.page.getByRole('button',{name:'Login'});
@@ -52,6 +49,12 @@ async clickLogin() {
 }
 
    async getDropdownItems(){
+    const options = this.page.getByRole('mat-option');
+
+    await options.first().waitFor({
+        state: 'visible',
+        timeout: 10000
+    });
     return (await this.page.getByRole('option').allTextContents())
     .map(item => item.trim())
     .filter(Boolean);
