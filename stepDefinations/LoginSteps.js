@@ -3,8 +3,8 @@ const{Given,When, Then} = createBdd();
 import { expect } from '@playwright/test';
 import {LoginPage} from "../pages/LoginPage.js";
 import { request } from "node:http";
-import { getTestData } from "../utils/excelReader.js";
-
+import ExcelReader from "../utils/excelReader.js";
+const excelReader = new ExcelReader();
 
 Given('Admin is on the browser', async ({page}) => {
       console.log ("Browser session started");
