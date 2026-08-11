@@ -5,8 +5,8 @@ import ExcelReader from '../utils/ExcelReader.js';
 import { expect } from '@playwright/test';
 const { Given, When, Then } = createBdd();
 const excelReader = new ExcelReader();
-let loginPage;
-let batchPage;
+//let loginPage;
+//let batchPage;
 
 Given('Admin is on home page after Login', async ({page}) => {
   const loginPage = new LoginPage(page);
@@ -195,6 +195,12 @@ Then('batch details pop up closes', async ({page}) => {
    const batchPage = new BatchPage(page);
    await batchPage.verifyDialogClosed();
 });
+When('Admin clicks the Cancel button', async ({page}) => {
+  // Step: When Admin clicks the delete Icon on any row Admin clicks the Cancel button
+  // From: features\Batch.feature:22:9
+  const batchPage = new BatchPage(page);
+  await batchPage.clickCancelButton();
+});
 
 //Edit batch Validation
 Given('Admin is on the Batch page', async ({page}) => {
@@ -337,7 +343,6 @@ Given('Admin is on the batch page with multiple pages of batch record', async ({
     await batchPage.verifyBatchPageWithMultiplePages();
   
   });
-  
   
   
   Then('Admin should see the Previous arrow \\(<)  disabled', async ({page}) => {
