@@ -196,8 +196,7 @@ Then('batch details pop up closes', async ({page}) => {
    await batchPage.verifyDialogClosed();
 });
 When('Admin clicks the Cancel button', async ({page}) => {
-  // Step: When Admin clicks the delete Icon on any row Admin clicks the Cancel button
-  // From: features\Batch.feature:22:9
+  
   const batchPage = new BatchPage(page);
   await batchPage.clickCancelButton();
 });
@@ -287,10 +286,10 @@ When('Admin clicks the delete Icon on any row', async ({page}) => {
    await batchPage.verifySuccessfulMessage();
  });
  
- When('Admin clicks the Cancel button', async ({page}) => {
-   const batchPage = new BatchPage(page);
-   await batchPage.clickCancelButton();
- });
+//  When('Admin clicks the Cancel button', async ({page}) => {
+//    const batchPage = new BatchPage(page);
+//    await batchPage.clickCancelButton();
+//  });
  
  When('Admin clicks the delete Icon on any row Admin', async ({page}) => {
    const batchPage = new BatchPage(page);

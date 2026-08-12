@@ -9,6 +9,11 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Playwright generated files
+playwright-report/
+test-results/
+.features-gen/
+
 # Runtime data
 pids
 *.pid
