@@ -5,26 +5,6 @@ export class LoginPage{
     constructor(page){
         this.page = page;
         this.url = process.env.APP_URL;
-<<<<<<< HEAD
-        //this.loginLink = this.page.locator('[id="login"]');
-        this.username=process.env.USER;
-        this.password=process.env.PASSWORD;
-       // this.dropdownItems = this.page.getByRole('listbox');
-        this.usernameField = this.page.locator('#username');
-        this.passwordField = this.page.locator('#password');
-        this.loginButton = this.page.locator('#login');
-        this.adminOption = this.page.getByRole('option', { name: 'Admin' });
-       // this.roleDropdown = this.page.locator('mat-select');
-        this.roleDropdown = this.page.getByRole('combobox');
-    }
-
-    async verifyLoginPageURL(){
-        return this.page.url();
-    }
-
-    
-    async gotoLoginPage(){
-=======
         this.loginLink = this.page.locator('[id="login"]');
         this.username=process.env.USER;
         this.password=process.env.PASSWORD;
@@ -48,20 +28,10 @@ async verifyLoginPageURL(){
     }
 
 async gotoLoginPage(){
->>>>>>> origin/Radhika_LMS_New
         await this.page.goto(this.url);
 
     }
 
-<<<<<<< HEAD
-    async login() {
-
-       //console.log(`Navigated to URL: ${this.page.url()}`);
-       //console.log(`Page title: ${await this.page.title()}`);
-       await this.usernameField.waitFor({ state: 'visible' });
-       await this.usernameField.fill(this.username);
-       await this.passwordField.waitFor({ state: 'visible' });
-=======
 async login() {
      
       console.log(`Navigated to URL: ${this.page.url()}`);
@@ -69,50 +39,37 @@ async login() {
        await this.usernameField.waitFor({ state: 'visible' });
        await this.usernameField.fill(this.username);
        await this.usernameField.waitFor({ state: 'visible' });
->>>>>>> origin/Radhika_LMS_New
        await this.passwordField.fill(this.password);
        await this.selectRole();
        await this.clickLogin();
    }
 
-<<<<<<< HEAD
-   async clickLogin() {
-    await this.loginButton.click();
-}
-
-     //  async getDropdownItems() {
-     //   return await this.dropdownItems.allTextContents();
-     // }
-=======
 async clickLogin() {
     await this.loginButton.click();
 }
 
    async getDropdownItems(){
-    const options = this.page.getByRole('mat-option');
+    const options = this.page.locator(
+        '.cdk-overlay-pane mat-option'
+    );
 
     await options.first().waitFor({
         state: 'visible',
         timeout: 10000
     });
+
+    const items = await options.allTextContents();
+    console.log('Dropdown options:', items);
     return (await this.page.getByRole('option').allTextContents())
     .map(item => item.trim())
     .filter(Boolean);
  }
->>>>>>> origin/Radhika_LMS_New
 
   async selectRole() {
 
     await this.roleDropdown.click();
     await this.adminOption.waitFor({state:'visible'});
     await this.adminOption.click();
-<<<<<<< HEAD
-    
-
-}
-
-}
-=======
 
 }
 
@@ -194,4 +151,3 @@ async verifyDropdownCount(){
     }
     
 }
->>>>>>> origin/Radhika_LMS_New

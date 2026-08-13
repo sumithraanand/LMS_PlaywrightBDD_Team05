@@ -100,7 +100,6 @@ Rule: Edit Batch Validation
         When Admin clicks cancel button after updating with valid data
         Then Admin should see the batch details popup closes without editing the batch
 
-<<<<<<< HEAD
       @Batch_Delete
 Rule: Batch Delete
     Background: Admin logs in and navigates to Batch page
@@ -116,46 +115,25 @@ Rule: Batch Delete
         Then Admin should see the confirm alert box with yes and no button
 
     Scenario: Delete batch Successfully
-=======
- @DeleteBatchValidation
-Rule: Delete Batch Validation
-Background: Admin navigates to Manage batch page after logged in
-        Given Admin is on the Batch page
-  Scenario: Display Delete Confirmation
-         When Admin clicks the delete Icon on any row
-         Then Admin should see the confirm alert box with yes and no button
-
-Scenario: Delete batch Successfully
->>>>>>> origin/Radhika_LMS_New
          When Admin clicks the delete Icon on any row
          Then Admin should see the confirm alert box with yes and no button
          When Admin clicks yes button
          Then Admin should see the successful message 
          And Admin should verify the batch should be deleted
 
-<<<<<<< HEAD
     Scenario: Cancel batch deletion
         When Admin clicks the delete Icon on any row
-=======
-Scenario: Cancel batch deletion
-         When Admin clicks the delete Icon on any row
->>>>>>> origin/Radhika_LMS_New
          Then Admin should see the confirm alert box with yes and no button
          When Admin clicks the Cancel button
          Then Admin should see the alert box closed 
          And the batch is not deleted
 
-<<<<<<< HEAD
      Scenario:close icon functionality
-=======
-Scenario:close icon functionality
->>>>>>> origin/Radhika_LMS_New
          When Admin clicks the delete Icon on any row
          Then Admin should see the confirm alert box with yes and no button
          When Admin clicks on the close icon
          Then Admin should see the alert box closed
 
-<<<<<<< HEAD
      @MultipleBatch_Delete
 Rule:MultipleBatch_Delete
      Scenario:Select multiple batch
@@ -165,22 +143,10 @@ Rule:MultipleBatch_Delete
 
      Scenario:Delete Multiple Batches
         Given Admin is on batch page
-=======
-  @MultipleBatch_Delete
-  Rule: Multi Delete Batch Validation
-Background: Admin navigates to Manage batch page after logged in
-        Given Admin is on batch page
- Scenario:Select multiple batch
-        When Admin selects more than one batch by clicking on the checkbox
-        Then Admin should see the Multiple delete box enabled under manage batch 
-
- Scenario:Delete Multiple Batches
->>>>>>> origin/Radhika_LMS_New
         When Admin selects more than one batch by clicking on the checkbox
         And Admin clicks on the delete button on the left top of the batch page
         Then Admin lands on Confirmation form
 
-<<<<<<< HEAD
 
      @Batch_Pagination
 Rule:Batch_Pagination
@@ -224,40 +190,3 @@ Rule:Batch_Pagination
           Given Admin is on the batch page with multiple pages of batch record
           When Admin clicks the first page option (<<) in the pagination control
           Then Admin should see the very first page on the data table
-=======
-@Batch_Pagination
-Rule: Batch Pagination Validation
-Background: Admin navigates to Manage batch page after logged in
-        Given Admin is on batch page
-
-Scenario:Previous page arrow disabled on first page
-Given Admin is on the batch page with multiple pages of batch record
-Then Admin should see the Previous arrow (<)  disabled
-
-Scenario:First page arrow disabled on first page
-Given Admin is on the batch page with multiple pages of batch record
-Then Admin should see the First page arrow (<<) disabled
-
-Scenario:Last page arrow enabled on first page
-Then Admin should see Last page arrow (>>) enabled
-
-Scenario:Next Page Navigation
-Given Admin is on the batch page with multiple pages of batch record
- When Admin clicks the next page option (>) in the pagination control
- Then Admin should see the Next enabled link
-
-Scenario:Last Page Navigation
-Given Admin is on the batch page with multiple pages of batch record
- When Admin clicks the last page option (>>) in the pagination control
- Then Admin should see the last page link with next page link disabled on the table
-
- Scenario:Previous Page Navigation
- Given Admin is on the batch page with multiple pages of batch record
- When Admin clicks the previous page option (<) in the pagination control
- Then Admin should see the previous page on the table
-
- Scenario:First Page Navigation
- Given Admin is on the batch page with multiple pages of batch record
- When Admin clicks the first page option (<<) in the pagination control
- Then Admin should see the very first page on the data table
->>>>>>> origin/Radhika_LMS_New

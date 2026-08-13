@@ -7,28 +7,12 @@ import { request } from "node:http";
 import ExcelReader from "../utils/ExcelReader.js";
 const excelReader = new ExcelReader();
 
-
-Given('Admin is on the browser', async ({page}) => {
-      console.log ("Browser session started");
-      const loginPage = new LoginPage(page);
-      await loginPage.gotoLoginPage();
-  });
   
 When('Admin enters the Valid LMS app URL', async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.gotoLoginPage();
     console.log("Launching LMS Application");
-   
-      });
-  
-Then('Admin should land on the login page', async ({page}) => {
-    console.log("page =", page);
-    const loginPage = new LoginPage(page);
-    const currentURL = await loginPage.verifyLoginPageURL();
-    console.log("Current URL:", currentURL);
-    await expect(page).toHaveURL(/login/);
-   
-  });
+    });
 
  When('Admin enters the invalid LMS app URL', async ({page}) => {
     await page.goto('https://lms-frontend-hackathon-6dcccb9dd0fa.herokuapp.com/invalid');
@@ -175,14 +159,6 @@ Then('Admin should see one dropdown', async ({page}) => {
     await loginPage.gotoLoginPage();
     await loginPage.login();
   });
-  
-  Then('Admin should land on home page', async ({page}) => {
-       
-    await expect(page.getByText('Dashboard')).toBeVisible();
-    const homePage = new HomePage(page);
-    await homePage.verifyHomePageLoaded();
-
-  });
 
   When('User clicks Login button after entering {string} fields', async ({page}, testCaseType) => {
           const loginPage = new LoginPage(page);
@@ -198,14 +174,20 @@ Then('Admin should see one dropdown', async ({page}) => {
       });
   
   
-Then('User should see appropriate error message in Login page', async ({page}) => {
-     const loginPage = new LoginPage(page);
-    const testData = getTestData(testCaseType);
-    console.log("Expected Error:", testData.Expected);
-     await expect(
-      page.getByText(testData.Expected, { exact: true })).toBeVisible({timeout: 10000});
-}
-);
+Then('User should see appropriate error message in Login page', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const testData = getTestData(testCaseType);
+  console.log('Expected Error:', testData.Expected);
+
+  await expect(
+    page.getByText(testData.Expected, { exact: true })
+  ).toBeVisible({ timeout: 10000 });
+});
+
+Then('Admin should land on the login page', async ({ page }) => {
+  await expect(page).toHaveURL(/\/login\/?$/i);
+});
+
 
 
 

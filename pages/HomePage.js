@@ -124,14 +124,4 @@ export class HomePage {
          ]);
         }
 
-<<<<<<< HEAD
 }
-
-
-
-
-
-
-=======
-}
->>>>>>> origin/Radhika_LMS_New
